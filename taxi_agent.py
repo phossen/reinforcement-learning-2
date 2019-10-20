@@ -99,7 +99,7 @@ class TableAgent():
 
 def train_table():
     # Trains a Q-learning agent and returns the Q-table
-    env = gym.make('Taxi-v2')
+    env = gym.make('Taxi-v3')
     agent = TableAgent(env.action_space.n, env.observation_space.n)
 
     num_episodes = 10000
@@ -154,7 +154,7 @@ def create_agent_weights(q_table):
 
     # Setting and saving the weights
     agent.model.set_weights(weights)
-    agent.model.save_weights('taxi_model.h5')
+    agent.model.save_weights('models/taxi_model.h5')
 
     return weights
 
@@ -186,13 +186,13 @@ def train_agent_weights(q_table):
     )
 
     # Saving the model
-    agent.model.save_weights('taxi_model.h5')
+    agent.model.save_weights('models/taxi_model.h5')
 
 
 def train():
     # Trains the Agent the same way the CartPole agent was trained
     # This function rarely converges
-    env = gym.make('Taxi-v2')
+    env = gym.make('Taxi-v3')
     action_space = env.action_space.n
     observation_space = env.observation_space.n
     agent = Agent(observation_space, action_space)
@@ -253,26 +253,26 @@ def train():
         epsilon = max(epsilon_min, epsilon_decay * epsilon)
         # Periodically saving the model
         if episode % 500 == 0:
-            agent.model.save('taxi_model_{}.h5'.format(episode))
+            agent.model.save('models/taxi_model_{}.h5'.format(episode))
 
     # Saving the model
-    agent.model.save('taxi_model.h5')
+    agent.model.save('models/taxi_model.h5')
 
     # Plotting of the results
     plt.plot(scores)
     plt.title('Training Phase')
     plt.ylabel('Time Steps')
     plt.xlabel('Trial')
-    plt.savefig('TaxiAgentTraining.png', bbox_inches='tight')
+    plt.savefig('results/TaxiAgentTraining.png', bbox_inches='tight')
     plt.show()
 
 
 def test_agent():
-    env = gym.make("Taxi-v2")
+    env = gym.make("Taxi-v3")
     action_space = env.action_space.n
     observation_space = env.observation_space.n
     agent = Agent(observation_space, action_space)
-    agent.load("taxi_model.h5")
+    agent.load("models/taxi_model.h5")
     scores = []
 
     for _ in range(100):
@@ -299,7 +299,7 @@ def test_agent():
     plt.ylabel('Time Steps')
     plt.ylim(ymax=10)
     plt.xlabel('Trial')
-    plt.savefig('TaxiAgentTesting.png', bbox_inches='tight')
+    plt.savefig('results/TaxiAgentTesting.png', bbox_inches='tight')
     plt.show()
 
 
@@ -337,6 +337,5 @@ def decode_to_18bit(i):
 if __name__ == "__main__":
     q_table = train_table() # Trains a Q-learning agent
     create_agent_weights(q_table) # Set neural network agent's weights according to Q-table
-    #train_agent_weigths(q_table) # Use this line to train the weights instead of infering them
+    #train_agent_weights(q_table) # Use this line to train the weights instead of infering them
     test_agent() # Test the agent with the neural network
-

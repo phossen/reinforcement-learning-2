@@ -135,7 +135,7 @@ def train():
         epsilon = max(epsilon_min, epsilon_decay * epsilon)
 
     # Saving the model
-    agent.model.save('cartpole_model.h5')
+    agent.model.save('models/cartpole_model.h5')
 
     # Plotting
     plt.plot(scores)
@@ -143,7 +143,7 @@ def train():
     plt.ylabel('Time Steps')
     plt.ylim(ymax=510)
     plt.xlabel('Trial')
-    plt.savefig('CartPoleTraining.png', bbox_inches='tight')
+    plt.savefig('results/CartPoleTraining.png', bbox_inches='tight')
     plt.show()
 
 
@@ -152,7 +152,7 @@ def test():
     action_space = env.action_space.n
     observation_space = env.observation_space.shape[0]
     agent = Agent(observation_space, action_space)
-    agent.load("cartpole_model.h5")
+    agent.load("models/cartpole_model.h5")
     scores = []
 
     # Playing 100 games
@@ -174,7 +174,7 @@ def test():
     plt.ylabel('Time Steps')
     plt.ylim(ymax=510)
     plt.xlabel('Trial')
-    plt.savefig('CartPoleTesting.png', bbox_inches='tight')
+    plt.savefig('results/CartPoleTesting.png', bbox_inches='tight')
     plt.show()
 
 
