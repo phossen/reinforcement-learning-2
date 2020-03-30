@@ -338,4 +338,5 @@ if __name__ == "__main__":
     q_table = train_table() # Trains a Q-learning agent
     create_agent_weights(q_table) # Set neural network agent's weights according to Q-table
     #train_agent_weights(q_table) # Use this line to train the weights instead of infering them
+    #train()
     test_agent() # Test the agent with the neural network
